@@ -44,3 +44,9 @@ desktop.ini
 WebBuild/_*.js
 WebBuild/_*.html
 WebBuild/shot-*.png
+WebBuild/live-*.png
+
+# ===== Vercel =====
+.vercel
+
+.vercel

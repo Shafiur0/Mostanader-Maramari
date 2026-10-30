@@ -4,11 +4,15 @@
 
 Six chapters. Seven fighters. One man who came back to find his town for sale.
 
+### ▶ [**Play it in your browser**](https://mostanader-maramari.vercel.app)
+
 ---
 
 ## ▶ Play right now (no install)
 
-Open **`WebBuild/index.html`** in any browser — double-click it, that's all.
+**Live:** https://mostanader-maramari.vercel.app
+
+Or open **`WebBuild/index.html`** locally in any browser — double-click it, that's all.
 No server, no build step, no internet needed.
 
 > If your browser blocks audio on `file://`, run `python -m http.server` inside
