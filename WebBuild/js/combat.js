@@ -11,7 +11,7 @@
   var GRAV = 2650;
   var ARENA_L = 150;
   var ARENA_R = D.WORLD_W - 150;
-  var PUSHBOX = 74;
+  var PUSHBOX = 92;
 
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function rnd(a, b) { return a + Math.random() * (b - a); }
@@ -217,7 +217,7 @@
       this.stateT = 0;
       this.anim = 'hit';
       this.vx = dir * kb;
-      this.hitFlash = 0.09;
+      this.hitFlash = 0.05;
       this.comboHits++;
       this.comboTimer = 1.2;
       this.meter = Math.min(100, this.meter + 5);

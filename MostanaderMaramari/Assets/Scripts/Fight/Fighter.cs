@@ -10,7 +10,7 @@ public class HitBox
 public class Fighter
 {
     public const float Gravity = 22f;
-    public const float Pushbox = 0.74f;
+    public const float Pushbox = 0.92f;
 
     public FighterDef def;
     public FighterRig rig;
@@ -134,7 +134,7 @@ public class Fighter
             stateT = 0f;
             anim = "hit";
             vx = dir * kb;
-            hitFlash = 0.09f;
+            hitFlash = 0.05f;
             comboHits++;
             comboTimer = 1.2f;
             meter = Mathf.Min(100f, meter + 5f);

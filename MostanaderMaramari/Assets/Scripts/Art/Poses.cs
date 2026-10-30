@@ -53,8 +53,8 @@ public static class Poses
         p.torso = 0.06f;
         p.shA = 0.22f - s * 0.24f; p.elA = 1.9f + s * 0.10f;
         p.shB = 0.16f + s * 0.24f; p.elB = 1.98f - s * 0.10f;
-        p.hipA = 0.34f * s; p.knA = 0.10f + Mathf.Max(0f, -s) * 0.45f;
-        p.hipB = -0.34f * s; p.knB = -0.10f - Mathf.Max(0f, s) * 0.45f;
+        p.hipA = 0.24f * s; p.knA = 0.10f + Mathf.Max(0f, -s) * 0.34f;
+        p.hipB = -0.24f * s; p.knB = -0.10f - Mathf.Max(0f, s) * 0.34f;
         p.bodyY = Mathf.Abs(c) * -0.02f;
         return p;
     }

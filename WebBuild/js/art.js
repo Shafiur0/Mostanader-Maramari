@@ -83,8 +83,8 @@
         torso: 0.06,
         shA: 0.22 - s * 0.24, elA: 1.9 + s * 0.10,
         shB: 0.16 + s * 0.24, elB: 1.98 - s * 0.10,
-        hipA: 0.34 * s, knA: 0.10 + Math.max(0, -s) * 0.45,
-        hipB: -0.34 * s, knB: -0.10 - Math.max(0, s) * 0.45,
+        hipA: 0.24 * s, knA: 0.10 + Math.max(0, -s) * 0.34,
+        hipB: -0.24 * s, knB: -0.10 - Math.max(0, s) * 0.34,
         bodyY: Math.abs(c) * -2.0
       });
     },
@@ -1370,8 +1370,12 @@
     if (stage.id === 'rooftop') {
       ctx.fillStyle = 'rgba(220,235,255,0.92)';
       ctx.beginPath(); ctx.arc(W * 0.78, H * 0.14, 34, 0, 6.284); ctx.fill();
-      ctx.fillStyle = 'rgba(160,190,255,0.10)';
-      ctx.beginPath(); ctx.arc(W * 0.78, H * 0.14, 96, 0, 6.284); ctx.fill();
+      var mg = ctx.createRadialGradient(W * 0.78, H * 0.14, 20, W * 0.78, H * 0.14, 120);
+      mg.addColorStop(0, 'rgba(190,215,255,0.22)');
+      mg.addColorStop(0.45, 'rgba(150,185,255,0.08)');
+      mg.addColorStop(1, 'rgba(140,175,255,0)');
+      ctx.fillStyle = mg;
+      ctx.beginPath(); ctx.arc(W * 0.78, H * 0.14, 120, 0, 6.284); ctx.fill();
     } else if (stage.id !== 'rickshaw') {
       var sunY = stage.id === 'akhra' ? H * 0.46 : H * 0.30;
       var sg = ctx.createRadialGradient(W * 0.68, sunY, 6, W * 0.68, sunY, 150);
@@ -1477,7 +1481,7 @@
      ============================================================ */
   Art.Weather = function (kind, W, H) {
     this.kind = kind; this.W = W; this.H = H; this.p = [];
-    var n = kind === 'rain' ? 220 : kind === 'dust' ? 60 : kind === 'embers' ? 70 : kind === 'flies' ? 26 : kind === 'citylights' ? 0 : 16;
+    var n = kind === 'rain' ? 220 : kind === 'dust' ? 60 : kind === 'embers' ? 70 : kind === 'flies' ? 26 : kind === 'citylights' ? 0 : 10;
     for (var i = 0; i < n; i++) this.p.push(this.spawn(true));
     this.t = 0;
   };
@@ -1488,7 +1492,7 @@
       case 'dust': return { x: Math.random() * W, y: init ? Math.random() * H : H + 10, v: -20 - Math.random() * 40, s: 1 + Math.random() * 3, a: 0.1 + Math.random() * 0.25, ph: Math.random() * 6.28 };
       case 'embers': return { x: Math.random() * W, y: init ? Math.random() * H : H + 10, v: -40 - Math.random() * 70, s: 1 + Math.random() * 2, a: 0.2 + Math.random() * 0.5, ph: Math.random() * 6.28 };
       case 'flies': return { x: Math.random() * W, y: H * 0.4 + Math.random() * H * 0.45, ph: Math.random() * 6.28, sp: 0.5 + Math.random(), s: 1 + Math.random() };
-      case 'steam': return { x: W * 0.24 + Math.random() * W * 0.20, y: H * 0.55 + Math.random() * H * 0.18, v: -14 - Math.random() * 16, s: 4 + Math.random() * 7, a: 0.05 + Math.random() * 0.07, ph: Math.random() * 6.28 };
+      case 'steam': return { x: W * 0.24 + Math.random() * W * 0.20, y: H * 0.55 + Math.random() * H * 0.18, v: -14 - Math.random() * 16, s: 3 + Math.random() * 5, a: 0.035 + Math.random() * 0.045, ph: Math.random() * 6.28 };
       default: return { x: Math.random() * W, y: Math.random() * H };
     }
   };
@@ -1515,7 +1519,7 @@
           q.y += Math.cos(this.t * q.sp * 1.3 + q.ph) * 16 * dt;
           break;
         case 'steam':
-          q.y += q.v * dt; q.s += 3.2 * dt;
+          q.y += q.v * dt; q.s += 1.0 * dt;
           if (q.y < H * 0.28) this.p[i] = this.spawn(false);
           break;
       }
@@ -1549,11 +1553,12 @@
     } else if (k === 'steam') {
       for (var s = 0; s < this.p.length; s++) {
         var st = this.p[s];
-        var gr = ctx.createRadialGradient(st.x, st.y, 0, st.x, st.y, st.s * 2.4);
-        gr.addColorStop(0, 'rgba(255,250,240,' + st.a * 1.6 + ')');
+        var fade = Math.min(1, Math.max(0, (st.y - this.H * 0.24) / (this.H * 0.22)));
+        var gr = ctx.createRadialGradient(st.x, st.y, 0, st.x, st.y, st.s * 1.7);
+        gr.addColorStop(0, 'rgba(255,250,240,' + (st.a * fade * 1.3) + ')');
         gr.addColorStop(1, 'rgba(255,250,240,0)');
         ctx.fillStyle = gr;
-        ctx.beginPath(); ctx.arc(st.x, st.y, st.s * 2.4, 0, 6.284); ctx.fill();
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.s * 1.7, 0, 6.284); ctx.fill();
       }
     }
     ctx.restore();
