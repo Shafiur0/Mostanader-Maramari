@@ -369,7 +369,12 @@
     var top = C.top, topD = C.topDark;
     var bot = C.bottom, botD = C.bottomDark;
 
-    if (flash) { skin = '#fff'; skinS = '#ffdede'; top = '#fff'; topD = '#ffe0e0'; bot = '#fff'; botD = '#ffe0e0'; }
+    if (flash) {
+      // lighten toward white but keep each fighter's colour identity
+      skin = shade(skin, 100); skinS = shade(skinS, 100);
+      top = shade(top, 100); topD = shade(topD, 100);
+      bot = shade(bot, 100); botD = shade(botD, 100);
+    }
 
     var hipY = -0.44 * H + p.bodyY;
     var torsoH = 0.30 * H;
