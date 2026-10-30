@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mostanader Maramari — মস্তানদের মারামারি</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+  <canvas id="game" width="1280" height="720"></canvas>
+  <div id="grain"></div>
+
+  <!-- ============ TITLE ============ -->
+  <section class="screen active" id="scr-title">
+    <div class="title-wrap">
+      <div class="bn-title">মস্তানদের মারামারি</div>
+      <h1 class="logo">MOSTANADER<span>MARAMARI</span></h1>
+      <div class="rule"></div>
+      <p class="tag">A small town. A burnt tea stall.<br>One man who came back.</p>
+      <button class="btn primary" id="btn-start">PRESS START</button>
+      <div class="hint">Click, or press any key</div>
+      <div class="credit">Nabinpur, Bangladesh &nbsp;·&nbsp; 6 chapters &nbsp;·&nbsp; 7 fighters</div>
+    </div>
+  </section>
+
+  <!-- ============ MAIN MENU ============ -->
+  <section class="screen" id="scr-menu">
+    <div class="panel">
+      <div class="panel-head">
+        <span class="kicker">MAIN MENU</span>
+        <h2>মস্তানদের মারামারি</h2>
+      </div>
+      <nav class="menu-list">
+        <button class="mi" data-act="story"><b>STORY MODE</b><i>Six chapters through Nabinpur</i></button>
+        <button class="mi" data-act="versus"><b>VERSUS</b><i>Fight any unlocked opponent</i></button>
+        <button class="mi" data-act="roster"><b>FIGHTERS</b><i>The roster of the town</i></button>
+        <button class="mi" data-act="options"><b>OPTIONS</b><i>Sound, controls, save data</i></button>
+      </nav>
+      <div class="panel-foot"><span id="progress-label">0 / 6 chapters cleared</span></div>
+    </div>
+  </section>
+
+  <!-- ============ STORY SELECT ============ -->
+  <section class="screen" id="scr-story">
+    <div class="panel wide">
+      <div class="panel-head">
+        <span class="kicker">STORY MODE</span>
+        <h2>Nabinpur — Chapter Select</h2>
+      </div>
+      <div class="chapter-grid" id="chapter-grid"></div>
+      <div class="panel-foot"><button class="btn ghost" data-act="menu">← BACK</button></div>
+    </div>
+  </section>
+
+  <!-- ============ DIALOGUE ============ -->
+  <section class="screen" id="scr-dialogue">
+    <div class="dlg-wrap">
+      <div class="dlg-speaker">
+        <span id="dlg-who">MOSTAFA</span>
+        <em id="dlg-role"></em>
+      </div>
+      <div class="dlg-box">
+        <p id="dlg-text"></p>
+        <span class="dlg-next" id="dlg-next">▼</span>
+      </div>
+      <div class="dlg-hint">click / SPACE to continue</div>
+    </div>
+  </section>
+
+  <!-- ============ VERSUS SELECT ============ -->
+  <section class="screen" id="scr-versus">
+    <div class="panel wide">
+      <div class="panel-head">
+        <span class="kicker">VERSUS</span>
+        <h2>Choose Your Fighter</h2>
+      </div>
+      <div class="vs-grid" id="vs-grid"></div>
+      <p class="vs-hint">Click a fighter to play as them &nbsp;·&nbsp; right-click a fighter to set your opponent</p>
+      <div class="vs-foot">
+        <div class="vs-side">
+          <span class="kicker">PLAYER</span>
+          <div class="vs-name" id="vs-p1">MOSTAFA</div>
+        </div>
+        <div class="vs-mid">
+          <div class="vs-stage" id="vs-stage-name">KACHA BAZAR</div>
+          <button class="btn small" id="btn-stage">CHANGE STAGE</button>
+        </div>
+        <div class="vs-side right">
+          <span class="kicker">OPPONENT</span>
+          <div class="vs-name" id="vs-p2">KALA CHAN</div>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <button class="btn ghost" data-act="menu">← BACK</button>
+        <button class="btn primary" id="btn-fight">FIGHT ▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROSTER ============ -->
+  <section class="screen" id="scr-roster">
+    <div class="panel wide">
+      <div class="panel-head">
+        <span class="kicker">ROSTER</span>
+        <h2>Who's in the town</h2>
+      </div>
+      <div class="roster-grid" id="roster-grid"></div>
+      <div class="panel-foot"><button class="btn ghost" data-act="menu">← BACK</button></div>
+    </div>
+  </section>
+
+  <!-- ============ OPTIONS ============ -->
+  <section class="screen" id="scr-options">
+    <div class="panel">
+      <div class="panel-head">
+        <span class="kicker">OPTIONS</span>
+        <h2>Settings</h2>
+      </div>
+      <div class="opt-list">
+        <label class="opt"><span>Master volume</span><input type="range" id="opt-vol" min="0" max="100" value="85"></label>
+        <label class="opt"><span>Music</span><input type="range" id="opt-music" min="0" max="100" value="50"></label>
+        <div class="opt"><span>Controls</span><button class="btn small" id="btn-controls">VIEW</button></div>
+        <div class="opt"><span>Erase story progress</span><button class="btn small danger" id="btn-reset">ERASE</button></div>
+      </div>
+      <div class="panel-foot"><button class="btn ghost" data-act="menu">← BACK</button></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTROLS ============ -->
+  <section class="screen" id="scr-controls">
+    <div class="panel">
+      <div class="panel-head"><span class="kicker">CONTROLS</span><h2>How to fight</h2></div>
+      <table class="keys">
+        <tr><td>A / D</td><td>walk</td><td>W</td><td>jump</td></tr>
+        <tr><td>S</td><td>crouch</td><td>S + away</td><td>crouch block</td></tr>
+        <tr><td>away</td><td>stand block</td><td>J</td><td>jab</td></tr>
+        <tr><td>K</td><td>heavy punch</td><td>L</td><td>kick</td></tr>
+        <tr><td>S + L</td><td>low kick</td><td>U</td><td>special (50)</td></tr>
+        <tr><td>I</td><td>super (100)</td><td>ESC</td><td>pause</td></tr>
+      </table>
+      <p class="note">High attacks whiff on crouch-block. Low attacks break stand-block. Jump attacks beat crouch-block.</p>
+      <div class="panel-foot"><button class="btn ghost" id="btn-controls-back">← BACK</button></div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="scr-result">
+    <div class="panel narrow">
+      <div class="panel-head"><span class="kicker" id="res-kicker">RESULT</span><h2 id="res-title">YOU WIN</h2></div>
+      <p class="res-sub" id="res-sub"></p>
+      <div class="panel-foot" id="res-actions"></div>
+    </div>
+  </section>
+
+  <!-- ============ PAUSE ============ -->
+  <section class="screen" id="scr-pause">
+    <div class="panel narrow">
+      <div class="panel-head"><span class="kicker">PAUSED</span><h2>Hold on</h2></div>
+      <nav class="menu-list compact">
+        <button class="mi" id="btn-resume"><b>RESUME</b></button>
+        <button class="mi" id="btn-quit"><b>QUIT TO MENU</b></button>
+      </nav>
+    </div>
+  </section>
+
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/data.js"></script>
+<script src="js/art.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/story.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
